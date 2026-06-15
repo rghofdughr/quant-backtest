@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Norgate parquet cache -- re-pullable, don't commit
+cache/
+
+# Large outputs
+results/returns/*.parquet
+
+# Logs
+logs/
+*.log
+
+# Secrets / local overrides
+.env
+config_local.yaml
+
+.pytest_cache/
