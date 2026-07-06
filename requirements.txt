@@ -1,0 +1,13 @@
+numpy==2.4.3
+pandas==2.3.3
+scipy==1.17.1
+matplotlib==3.10.8
+seaborn==0.13.2
+statsmodels==0.14.6
+PyYAML==6.0.3
+yfinance==1.2.0
+norgatedata==1.0.74
+pytest==9.0.3
+
+# Optional, only used by a lazy import in calendars.py:
+# pandas_market_calendars
