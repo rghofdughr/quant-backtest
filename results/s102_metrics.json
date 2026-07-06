@@ -1,0 +1,19 @@
+{
+  "is": {
+    "sharpe": null,
+    "cagr": null,
+    "max_dd": null
+  },
+  "oos": {
+    "sharpe": null,
+    "cagr": null,
+    "max_dd": null
+  },
+  "full": {
+    "sharpe": null,
+    "cagr": null
+  },
+  "flag": "STUB_DATA",
+  "stub_reason": "Needs sector ETF constituent membership (XLK/XLF/XLE as index names) via index_constituent_mask(sym, 'XLK'). Norgate does not expose sector ETF basket membership -- only traditional equity indices (Russell, S&P 500, Nasdaq). Fix: source XLK/XLF/XLE holdings history from SPDR fact sheets or a data vendor that tracks ETF constituent changes.",
+  "lookahead_audit": "SUSPECT -- line 120: sp_hist = spread_df[etf].iloc[...:i+1] includes today's spread in z-score numerator AND denominator; then today's pair return is earned. Directional impact is NEGATIVE on entry days (ETF overpriced -> pair return < 0 on entry day). Bias likely works AGAINST the strategy, not for it."
+}

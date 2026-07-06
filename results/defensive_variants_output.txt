@@ -1,0 +1,129 @@
+Loading asset prices (full history 2000-2024)...
+  SPY: 2000-01-03 to 2024-12-31
+  GLD: 2004-11-18 to 2024-12-31
+  TLT: 2002-07-26 to 2024-12-31
+  IEF: 2002-07-26 to 2024-12-31
+  SHY: 2002-07-26 to 2024-12-31
+  TIP: 2003-12-05 to 2024-12-31
+  DBC: 2006-02-03 to 2024-12-31
+  HYG: 2007-04-11 to 2024-12-31
+  LQD: 2002-07-26 to 2024-12-31
+  VNQ: 2004-09-29 to 2024-12-31
+
+Loading existing 11-strategy book returns...
+  s128: OOS SR=+1.016
+  s30: OOS SR=+0.691
+  s31: OOS SR=+0.833
+  s35: OOS SR=+0.529
+  s49: OOS SR=+0.552
+  s115: OOS SR=+0.828
+  s113: OOS SR=+0.799
+  s135: OOS SR=+0.774
+  s02: OOS SR=+0.686
+  s46: OOS SR=+0.806
+  s90: OOS SR=+0.938
+  Book OOS SR=+1.054  N_eff=3.039
+
+=========================================================================================================
+STEP 0 -- DIAGNOSTIC: DEFENSIVE ASSET vs EXISTING STRATEGY CORRELATIONS (OOS 2017-2024)
+=========================================================================================================
+  s46 universe: SPY+TLT+GLD+DBC+VNQ (inv-vol weighted; always invested)
+  s90 universe: SPY or FLAT (HYG/LQD credit regime; never holds bonds/gold)
+  s31 universe: SPY only (vol-target; never holds bonds/gold)
+  TIP/IEF/SHY: not in any existing strategy's universe
+
+  Asset      s90     s46     s31     s02    s128     s30  {'Book':>6}  Least-redundant-with
+  --------------------------------------------------------------------------------
+  GLD     +0.087  +0.589  +0.083  +0.500  +0.147  +0.149  +0.347  (s31, +0.083)
+  TLT     +0.037  +0.320  -0.110  +0.190  -0.182  -0.108  +0.061  (s90, -0.182)
+  IEF     +0.062  +0.364  -0.089  +0.220  -0.134  -0.056  +0.103  (s30, -0.134)
+  SHY     +0.068  +0.309  -0.045  +0.202  -0.063  +0.006  +0.121  (s30, -0.063)
+  TIP     +0.117  +0.507  +0.066  +0.354  +0.054  +0.081  +0.270  (s128, +0.054)
+  DBC     +0.141  +0.566  +0.305  +0.430  +0.375  +0.259  +0.437  (s90, +0.141)
+
+  Implications for strategy design:
+  - High corr to s46 -> asset already in risk-parity sleeve; marginal value low
+  - High corr to s90 -> asset moves with credit regime (equity stress proxy)
+  - Low corr to both -> potentially new information for the book
+
+Running 9 variants...
+  Running R-ma200...
+  Running R-vol...
+  Running R-credit...
+  Running O-goldtrend...
+  Running O-bondtrend...
+  Running O-multi...
+  Running X-gtaa5...
+  Running X-gtaa6...
+  Running X-dual...
+
+===================================================================================================================
+DEFENSIVE-ASSET ROTATION  OOS 2017-07-03 to 2024-12-31
+===================================================================================================================
+Book baseline:  OOS SR=+1.054  CAGR=+11.7%  MDD=-15.5%
+SE(Sharpe,8yr) ~= +/-0.35  --  gaps < 0.10 are statistical ties
+
+Label            GrSR  NetSR    CAGR     MDD    TO   CorrBk  MaxStr Match   dNeff    dSR  Gates
+-------------------------------------------------------------------------------------------------------------------
+-- R-Reactive --
+  R-ma200      +0.942 +0.890 +13.3% -31.3%  3.9x  +0.703  +0.749   s31 +0.0222 +0.0091  corr/dNeff
+  R-vol        +1.190 +1.135 +17.9% -25.0%  3.9x  +0.717  +0.771   s31 +0.0104 +0.0254  corr/dNeff
+  R-credit     +0.664 +0.526 +7.5% -33.4% 10.1x  +0.652  +0.681   s90 +0.1221 -0.0135  dSR
+-- O-Own-dyn --
+  O-goldtrend  +0.689 +0.586 +7.0% -25.1%  6.1x  +0.275  +0.481   s46 +0.3825 +0.0162  PASS
+  O-bondtrend  -0.008 -0.096 -2.4% -32.1%  6.2x  +0.069  +0.396  s135 +0.4087 -0.0138  dSR
+  O-multi      +0.485 +0.339 +3.3% -23.8%  7.6x  +0.298  +0.521   s46 +0.3590 -0.0001  dSR
+-- X-Cross-mom --
+  X-gtaa5      +0.658 +0.575 +6.9% -27.1%  5.1x  +0.529  +0.603  s135 +0.2228 -0.0004  dSR
+  X-gtaa6      +0.906 +0.787 +8.9% -21.2%  5.9x  +0.527  +0.611   s46 +0.2271 +0.0114  PASS
+  X-dual       +0.695 +0.561 +7.9% -21.8%  9.2x  +0.458  +0.591  s135 +0.2851 +0.0035  PASS
+
+===================================================================================================================
+PER-YEAR NET RETURNS (cap: watch for single-year drivers)
+===================================================================================================================
+  Year       Book       R-ma200         R-vol      R-credit   O-goldtrend   O-bondtrend       O-multi       X-gtaa5       X-gtaa6        X-dual
+  ---------------------------------------------------------------------------------------------------------------------------------------------
+  2017     +9.2%        +8.4%        +7.9%        -4.3%        -5.5%        -1.0%        -3.3%        +5.0%        +0.7%        -4.3%
+  2018     -3.3%        -6.2%        -2.0%       -21.4%        +0.4%       -14.2%       -13.2%       -16.2%       -15.9%        -4.7%
+  2019    +22.2%       +14.8%       +22.0%       +16.5%       +11.4%       +12.2%        +8.2%       +16.9%       +18.0%       +11.0%
+  2020    +28.7%       +39.1%       +46.0%       +47.7%       +22.6%       +15.6%       +18.0%       +20.4%       +20.5%       +19.1%
+  2021    +21.2%       +36.4%       +36.4%       +22.7%       -12.9%       -10.5%       +16.7%       +20.0%       +26.8%       +27.5%
+  2022     -8.8%       -26.0%       -16.7%       -19.5%        +1.6%        -2.9%        -7.0%        -6.7%        -6.0%       -14.8%
+  2023    +13.6%       +28.4%       +30.7%       +20.7%       +10.8%        +1.7%        -2.9%        +4.0%       +11.2%       +18.2%
+  2024    +13.2%       +25.2%       +28.8%       +13.7%       +33.5%       -14.8%       +13.7%       +16.9%       +21.5%       +16.9%
+
+  Single-year dependency check (flag if one year > ~40% of total CAGR):
+  FLAG O-goldtrend: 2024 = +33.5%  (42% of total positive return)
+  FLAG O-bondtrend: 2020 = +15.6%  (53% of total positive return)
+
+===================================================================================================================
+REDUNDANCY GATE SUMMARY
+Gates: max_strat_corr < 0.7  |  dN_eff > +0.05  |  dSR >= 0.0  (test weight: 5%)
+===================================================================================================================
+Variants passing ALL gates: 3 of 9
+  PASS: O-goldtrend    NetSR=+0.586  corr_book=+0.275  max_strat=+0.481  dNeff=+0.3825  dSR=+0.0162
+  PASS: X-gtaa6        NetSR=+0.787  corr_book=+0.527  max_strat=+0.611  dNeff=+0.2271  dSR=+0.0114
+  PASS: X-dual         NetSR=+0.561  corr_book=+0.458  max_strat=+0.591  dNeff=+0.2851  dSR=+0.0035
+
+PRIOR HYPOTHESIS CHECK:
+  R (expected: correlated with s90/s46):
+    R-ma200       : corr_book=+0.703  best_match=s31(+0.749)  dNeff=+0.0222  gates=corr/dNeff
+    R-vol         : corr_book=+0.717  best_match=s31(+0.771)  dNeff=+0.0104  gates=corr/dNeff
+    R-credit      : corr_book=+0.652  best_match=s90(+0.681)  dNeff=+0.1221  gates=dSR
+  O (expected: most orthogonal):
+    O-goldtrend   : corr_book=+0.275  best_match=s46(+0.481)  dNeff=+0.3825  gates=PASS
+    O-bondtrend   : corr_book=+0.069  best_match=s135(+0.396)  dNeff=+0.4087  gates=dSR
+    O-multi       : corr_book=+0.298  best_match=s46(+0.521)  dNeff=+0.3590  gates=dSR
+  X (expected: correlated with s02/s77):
+    X-gtaa5       : corr_book=+0.529  best_match=s135(+0.603)  dNeff=+0.2228  gates=dSR
+    X-gtaa6       : corr_book=+0.527  best_match=s46(+0.611)  dNeff=+0.2271  gates=PASS
+    X-dual        : corr_book=+0.458  best_match=s135(+0.591)  dNeff=+0.2851  gates=PASS
+
+STRUCTURAL NOTE:
+  s46 holds TLT+GLD+DBC continuously (inv-vol weighted, 14% book weight).
+  Any strategy holding those assets unconditionally will correlate with s46.
+  Only conditional exposure (hold-when-trending) can break this correlation.
+  2022 is the key year: bonds -26%, gold flat, DBC +25%. O variants must
+  show they exited bonds in 2022 to claim genuine non-redundancy vs s46.
+
+Done.

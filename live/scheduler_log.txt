@@ -1,0 +1,72 @@
+==============================================================
+  S128 SECTOR ROTATION -LIVE SIGNAL
+==============================================================
+
+  Today (2026-06-24) is NOT the last trading day of the month.
+  Next signal date: 2026-06-30
+
+  Running in PREVIEW mode -signal shown but NOT logged.
+  To log anyway: python s128_live.py --force
+
+Fetching 269 trading days of data for 11 ETFs...
+  Latest data date: 2026-06-24
+  Total rows: 334
+
+------------------------------------------------------------
+DATA VERIFICATION
+------------------------------------------------------------
+
+  Check 1 -XLU 9m return: adjusted vs raw
+  (XLU pays ~3-4%/yr in dividends; the two numbers should differ)
+    XLU adjusted (auto_adjust=True): +9.148%
+    XLU raw     (auto_adjust=False): +6.901%
+
+  OK -difference of +2.246% confirms dividends are included.
+
+  Check 2 -Trading days of adjusted history per ticker
+  (need 194+ rows; XLRE launched Oct 2015, XLC launched Jun 2018)
+    XLK      334 days  [OK]
+    XLF      334 days  [OK]
+    XLE      334 days  [OK]
+    XLV      334 days  [OK]
+    XLI      334 days  [OK]
+    XLY      334 days  [OK]
+    XLP      334 days  [OK]
+    XLRE     334 days  [OK]
+    XLB      334 days  [OK]
+    XLU      334 days  [OK]
+    XLC      334 days  [OK]
+
+  All 11 tickers have sufficient history.
+------------------------------------------------------------
+
+------------------------------------------------------------
+9-MONTH MOMENTUM RANKING
+------------------------------------------------------------
+   1. XLK     +30.03%  <<< HOLD
+   2. XLE     +24.95%  <<< HOLD
+   3. XLI     +18.81%  <<< HOLD
+   4. XLB     +14.74%  <<< HOLD
+   5. XLV     +13.68%
+   6. XLP     +10.56%
+   7. XLRE     +9.66%
+   8. XLU      +9.15%
+   9. XLF      +0.69%
+  10. XLY      -3.61%
+  11. XLC      -9.34%
+
+------------------------------------------------------------
+TARGET PORTFOLIO
+------------------------------------------------------------
+  Cash filter: inactive (top sector XLK = +30.03%)
+
+  XLK     25.00%
+  XLE     25.00%
+  XLI     25.00%
+  XLB     25.00%
+
+  (preview mode -not logged)
+
+==============================================================
+  Next run: last trading day of next month, after 4 PM ET
+==============================================================

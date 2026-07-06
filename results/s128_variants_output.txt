@@ -1,0 +1,102 @@
+Loading prices...
+  Sectors: 11/11
+  V8 extra: ['EFA', 'EEM', 'EWJ']
+  Defensive: ['IEF', 'GLD', 'SHY']
+
+Loading book returns...
+  Book OOS SR=+1.054
+  s128 OOS SR=+1.016
+
+Building weight schedules...
+  V0 baseline...
+  V1 inv-vol...
+  V2 vol-target...
+  V3 blend lookbacks...
+  V4 skip-month...
+  V5 hysteresis...
+  V6 graded filter...
+  V7 defensive sleeve...
+  V8 broad universe...
+  V9 diversity-aware...
+  V10 cash yield fix...
+
+Running engine for all variants...
+  V0-base...
+  V1-invvol...
+  V2-voltgt...
+  V3-blend...
+  V4-skipm...
+  V5-hyst...
+  V6-graded...
+  V7-def...
+  V8-broad...
+  V9-divaware...
+  V10-cshyld...
+
+========================================================================================================================
+S128 VARIANTS  OOS 2017-07-03 to 2024-12-31
+========================================================================================================================
+Book baseline: OOS SR=+1.054  CAGR=+11.7%  MDD=-15.5%
+s128 in book at 6.5% weight (OOS SR=+1.016)
+SE(Sharpe,8yr)~=+/-0.35  |  gaps < 0.10 are ties
+'delta_SR_book' = book Sharpe change if we swap s128 for this variant at 6.5% weight
+'max_other_corr' = max corr to the OTHER 10 book strategies (not s128)
+
+Label            GrSR  NetSR    CAGR     MDD    TO  corrS128  dSR_bk  maxOth bestOth
+------------------------------------------------------------------------------------------------------------------------
+  V0-base      +0.910 +0.826 +14.9% -27.7%  7.1x   +0.956  -0.0216  +0.845     s30
+  V1-invvol    +0.882 +0.781 +13.7% -27.9%  8.3x   +0.949  -0.0264  +0.861     s30
+  V2-voltgt    +0.773 +0.660 +8.8% -23.9%  7.2x   +0.893  -0.0333  +0.775     s30
+  V3-blend     +0.951 +0.856 +15.8% -27.7%  8.0x   +0.943  -0.0185  +0.833     s30
+  V4-skipm     +0.811 +0.729 +13.1% -26.8%  7.2x   +0.946  -0.0326  +0.829     s30
+  V5-hyst      +0.831 +0.793 +14.3% -27.0%  3.5x   +0.957  -0.0265  +0.845     s49
+  V6-graded    +0.984 +0.884 +16.9% -27.7%  8.6x   +0.939  -0.0128  +0.821     s30
+  V7-def       +0.910 +0.818 +14.8% -27.7%  7.6x   +0.954  -0.0223  +0.843     s30
+  V8-broad     +0.947 +0.855 +15.7% -27.7%  7.8x   +0.949  -0.0186  +0.840     s49
+  V9-divaware  +0.942 +0.837 +15.7% -30.1%  8.9x   +0.937  -0.0189  +0.847     s30
+  V10-cshyld   +0.910 +0.818 +14.8% -27.7%  7.6x   +0.954  -0.0223  +0.843     s30
+
+========================================================================================================================
+PER-YEAR NET RETURNS
+========================================================================================================================
+  Year       Book   s128-base     V1-invvol     V2-voltgt      V3-blend      V4-skipm       V5-hyst     V6-graded        V7-def      V8-broad   V9-divaware    V10-cshyld
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  2017     +9.2%      +7.7%        -3.7%        -0.7%        -0.4%        -1.1%        +6.1%        -3.4%        -2.7%        -2.3%        -4.2%        -2.7%
+  2018     -3.3%      -1.6%        -2.3%        -2.7%        -4.8%        -8.6%        -7.6%        -2.6%        -2.6%        -0.9%        -3.3%        -2.6%
+  2019    +22.2%     +24.9%       +19.2%       +13.8%       +23.7%       +27.7%       +23.5%       +19.1%       +19.5%       +20.0%       +19.9%       +19.5%
+  2020    +28.7%     +30.8%       +29.5%        +5.4%       +29.7%       +24.9%       +24.2%       +34.9%       +30.8%       +30.8%       +29.0%       +30.8%
+  2021    +21.2%     +38.3%       +33.6%       +19.9%       +36.3%       +32.2%       +35.0%       +33.4%       +33.4%       +32.9%       +34.8%       +33.4%
+  2022     -8.8%      +5.7%        +3.7%        +6.7%        +4.9%        +3.1%        +2.6%       +19.5%        +9.5%        +9.5%       +10.2%        +9.5%
+  2023    +13.6%     +20.0%        +6.7%        +4.6%       +19.5%        +9.8%       +12.5%        +9.9%        +6.7%       +10.6%       +15.3%        +6.7%
+  2024    +13.2%     +26.7%       +26.5%       +23.8%       +20.0%       +20.5%       +20.8%       +26.7%       +26.7%       +26.7%       +26.7%       +26.7%
+
+========================================================================================================================
+SUMMARY AND RECOMMENDATIONS
+========================================================================================================================
+  Baseline (V0) net SR: +0.826
+
+  Ranked by book SR improvement (delta_SR_book, most improved first):
+    V6-graded      NetSR=+0.884 (BEATS V0)  corrS128=+0.939  dSR_book=-0.0128  maxOth=+0.821(s30)
+    V3-blend       NetSR=+0.856 (TIES V0)  corrS128=+0.943  dSR_book=-0.0185  maxOth=+0.833(s30)
+    V8-broad       NetSR=+0.855 (TIES V0)  corrS128=+0.949  dSR_book=-0.0186  maxOth=+0.840(s49)
+    V9-divaware    NetSR=+0.837 (TIES V0)  corrS128=+0.937  dSR_book=-0.0189  maxOth=+0.847(s30)
+    V7-def         NetSR=+0.818 (TIES V0)  corrS128=+0.954  dSR_book=-0.0223  maxOth=+0.843(s30)
+    V10-cshyld     NetSR=+0.818 (TIES V0)  corrS128=+0.954  dSR_book=-0.0223  maxOth=+0.843(s30)
+    V1-invvol      NetSR=+0.781 (TIES V0)  corrS128=+0.949  dSR_book=-0.0264  maxOth=+0.861(s30)
+    V5-hyst        NetSR=+0.793 (TIES V0)  corrS128=+0.957  dSR_book=-0.0265  maxOth=+0.845(s49)
+    V4-skipm       NetSR=+0.729 (LAGS V0)  corrS128=+0.946  dSR_book=-0.0326  maxOth=+0.829(s30)
+    V2-voltgt      NetSR=+0.660 (LAGS V0)  corrS128=+0.893  dSR_book=-0.0333  maxOth=+0.775(s30)
+
+  Orthogonality to baseline (corr_s128 < 0.95 suggests genuine modification):
+    V1-invvol      corr_s128=+0.949  (genuinely different)
+    V2-voltgt      corr_s128=+0.893  (genuinely different)
+    V3-blend       corr_s128=+0.943  (genuinely different)
+    V4-skipm       corr_s128=+0.946  (genuinely different)
+    V5-hyst        corr_s128=+0.957  (close variant)
+    V6-graded      corr_s128=+0.939  (genuinely different)
+    V7-def         corr_s128=+0.954  (close variant)
+    V8-broad       corr_s128=+0.949  (genuinely different)
+    V9-divaware    corr_s128=+0.937  (genuinely different)
+    V10-cshyld     corr_s128=+0.954  (close variant)
+
+Done.

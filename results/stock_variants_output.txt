@@ -1,0 +1,104 @@
+Loading universe...
+  TR prices: (6289, 1107)  |  GICS: 1284  |  Shares: 1233
+Loading ETF prices (full history for sector signal)...
+Loading existing 11-strategy book returns...
+  Book OOS SR=+1.054  N_eff=3.039
+  Running A-mom-cap...
+  Running A-mom-ew...
+  Running B-mom-cap...
+  Running B-mom-ew...
+  Running C-mom-cap...
+  Running C-mom-ew...
+  Running A-lowvol-cap...
+  Running A-lowvol-ew...
+  Running B-lowvol-cap...
+  Running B-lowvol-ew...
+  Running C-lowvol-cap...
+  Running C-lowvol-ew...
+  Running A-rev-cap...
+  Running A-rev-ew...
+  Running B-rev-cap...
+  Running B-rev-ew...
+  Running C-rev-cap...
+  Running C-rev-ew...
+
+====================================================================================================
+STOCK-LEVEL SECTOR ROTATION  OOS 2017-07-03 to 2024-12-31
+====================================================================================================
+Book baseline:  OOS SR=+1.054  CAGR=+11.7%  MDD=-15.5%
+SE(Sharpe,8yr) ~= +/-0.35  --  gaps < 0.10 are statistical ties
+
+Mechanism A: Two-stage sector momentum (s128 signal) -> top-5 stocks per winning sector
+Mechanism B: Cross-sector neutral, equal sector budgets, top-3 by ABSOLUTE signal
+Mechanism C: Within-sector RS, top-3 by stock-vs-sector excess signal
+Signals: mom=12m-1m momentum  lowvol=inverse vol  rev=1m reversal (buy losers)
+Weighting: cap=capital-adj market cap  ew=equal weight
+
+Label                GrSR  NetSR    CAGR     MDD  TO(x)  CorrBk  MaxStr  dNeff    dSR    Gates
+----------------------------------------------------------------------------------------------------
+-- Mechanism A --
+A-mom-cap          +0.862 +0.818 +17.8% -28.1%    5.3x   0.762   0.894 -0.075 -0.001 corr/dNeff/dSR
+A-mom-ew           +0.817 +0.774 +16.1% -28.6%    4.9x   0.775   0.901 -0.088 -0.006 corr/dNeff/dSR
+A-lowvol-cap       +0.820 +0.774 +12.4% -24.9%    3.9x   0.743   0.901 -0.083 -0.002 corr/dNeff/dSR
+A-lowvol-ew        +0.849 +0.805 +12.7% -26.3%    3.6x   0.764   0.912 -0.107 -0.001 corr/dNeff/dSR
+A-rev-cap          +0.658 +0.567 +10.8% -35.2%   10.4x   0.739   0.840 -0.057 -0.023 corr/dNeff/dSR
+A-rev-ew           +0.680 +0.595 +11.7% -35.6%    9.9x   0.737   0.835 -0.055 -0.021 corr/dNeff/dSR
+
+-- Mechanism B --
+B-mom-cap          +0.790 +0.747 +14.6% -33.2%    4.5x   0.814   0.890 -0.141 -0.012 corr/dNeff/dSR
+B-mom-ew           +0.804 +0.767 +14.9% -33.7%    3.8x   0.821   0.897 -0.150 -0.011 corr/dNeff/dSR
+B-lowvol-cap       +0.849 +0.823 +12.8% -31.3%    2.1x   0.764   0.954 -0.116 +0.000 corr/dNeff
+B-lowvol-ew        +0.851 +0.829 +12.8% -31.8%    1.8x   0.772   0.959 -0.125 +0.000 corr/dNeff
+B-rev-cap          +0.600 +0.518 +10.4% -47.0%   10.4x   0.712   0.759 -0.029 -0.029 corr/dNeff/dSR
+B-rev-ew           +0.584 +0.506 +10.1% -46.9%   10.0x   0.707   0.751 -0.022 -0.030 corr/dNeff/dSR
+
+-- Mechanism C --
+C-mom-cap          +0.790 +0.747 +14.6% -33.2%    4.5x   0.814   0.890 -0.141 -0.012 corr/dNeff/dSR
+C-mom-ew           +0.804 +0.767 +14.9% -33.7%    3.8x   0.821   0.897 -0.150 -0.011 corr/dNeff/dSR
+C-lowvol-cap       +0.849 +0.823 +12.8% -31.3%    2.1x   0.764   0.954 -0.116 +0.000 corr/dNeff
+C-lowvol-ew        +0.851 +0.829 +12.8% -31.8%    1.8x   0.772   0.959 -0.125 +0.000 corr/dNeff
+C-rev-cap          +0.600 +0.518 +10.4% -47.0%   10.4x   0.712   0.759 -0.029 -0.029 corr/dNeff/dSR
+C-rev-ew           +0.584 +0.506 +10.1% -46.9%   10.0x   0.707   0.751 -0.022 -0.030 corr/dNeff/dSR
+
+====================================================================================================
+PER-YEAR NET RETURNS  (cap-weight variants only)
+====================================================================================================
+  Year     Book     A-mom-cap    A-lowvol-c     A-rev-cap     B-mom-cap    B-lowvol-c     B-rev-cap     C-mom-cap    C-lowvol-c     C-rev-cap
+----------------------------------------------------------------------------------------------------------------------------------------------
+  2017  +18.5%       +17.3%       +17.3%        -2.7%       +23.0%       +10.2%        +7.5%       +23.0%       +10.2%        +7.5%
+  2018   -3.2%        +5.2%        +5.7%       -18.2%        -7.4%        +1.4%        -9.0%        -7.4%        +1.4%        -9.0%
+  2019  +21.3%       +19.2%       +17.1%       +23.2%       +26.4%       +25.5%       +36.6%       +26.4%       +25.5%       +36.6%
+  2020  +27.5%       +29.4%       +10.6%       +19.3%       +14.8%        +4.7%        +5.5%       +14.8%        +4.7%        +5.5%
+  2021  +20.4%       +17.7%       +35.9%       +38.8%       +22.7%       +38.3%       +37.7%       +22.7%       +38.3%       +37.7%
+  2022   -8.6%        +1.2%        +7.5%        +5.1%        -5.3%        +2.5%       -10.1%        -5.3%        +2.5%       -10.1%
+  2023  +13.2%       +12.6%        -6.5%       +12.2%       +12.0%        +5.5%       +20.0%       +12.0%        +5.5%       +20.0%
+  2024  +12.7%       +44.6%       +19.0%       +11.1%       +43.2%       +17.6%        +4.2%       +43.2%       +17.6%        +4.2%
+
+====================================================================================================
+CAP-WEIGHT vs EQUAL-WEIGHT DIAGNOSTIC
+(Large gap = result driven by megacap beta, not stock selection)
+====================================================================================================
+Label           Cap NetSR   EW NetSR      Gap   Megacap?
+------------------------------------------------------------
+A-mom-cap          +0.818     +0.774   +0.043         no
+A-lowvol-cap       +0.774     +0.805   -0.031         no
+A-rev-cap          +0.567     +0.595   -0.029         no
+B-mom-cap          +0.747     +0.767   -0.020         no
+B-lowvol-cap       +0.823     +0.829   -0.006         no
+B-rev-cap          +0.518     +0.506   +0.012         no
+C-mom-cap          +0.747     +0.767   -0.020         no
+C-lowvol-cap       +0.823     +0.829   -0.006         no
+C-rev-cap          +0.518     +0.506   +0.012         no
+
+====================================================================================================
+REDUNDANCY GATE SUMMARY
+Gates: max_strat_corr < 0.70  |  dN_eff > +0.05  |  dSR >= 0.0  (test weight: 5%)
+====================================================================================================
+Variants passing ALL gates: 0 of 18
+  None passed all gates.
+
+PRIOR HYPOTHESIS CHECK:
+  B-lowvol-cap: corr_book=0.764  max_strat=0.954  dNeff=-0.116  gates=FAIL
+  B-rev-cap: corr_book=0.712  max_strat=0.759  dNeff=-0.029  gates=FAIL
+  C-lowvol-cap: corr_book=0.764  max_strat=0.954  dNeff=-0.116  gates=FAIL
+  C-rev-cap: corr_book=0.712  max_strat=0.759  dNeff=-0.029  gates=FAIL

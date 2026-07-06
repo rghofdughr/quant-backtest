@@ -70,30 +70,37 @@ def run(config):
         if i < WARMUP:
             continue
 
-        members = member_df.iloc[i] if i < len(member_df) else member_df.iloc[-1]
-        dv_now = dv_df.iloc[i - 1]
+        # Use yesterday's data for all signals (t-1 info → t execution)
+        members = member_df.iloc[i - 1] if i > 0 else member_df.iloc[0]
+        dv_now  = dv_df.iloc[i - 1]
 
-        # Check exits: price crosses below 25-day low (or delisted)
+        # ---- EXIT CHECK: signal from yesterday's close (no same-bar lookahead) ----
         to_exit = []
         for sym in list(positions.keys()):
-            cur = close_cap.iloc[i].get(sym)
-            if cur is None or not np.isfinite(cur):
+            cur_now = close_cap.iloc[i].get(sym)
+            if cur_now is None or not np.isfinite(cur_now):
+                # Delisted/stopped trading today: exit with whatever return ret_df gives (0 from ffill)
                 to_exit.append(sym)
                 continue
-            low25 = close_cap[sym].iloc[max(i - EXIT_DAYS, 0):i].min()
-            if cur <= low25:
+            cur_prev = close_cap.iloc[i - 1].get(sym) if i > 0 else None
+            if cur_prev is None or not np.isfinite(cur_prev):
+                continue
+            # 25-day low computed through yesterday (excludes today)
+            low25 = close_cap[sym].iloc[max(i - EXIT_DAYS - 1, 0):i - 1].min()
+            if cur_prev <= low25:
                 to_exit.append(sym)
 
-        for sym in to_exit:
-            positions.pop(sym, None)
-
-        # P&L for positions open BEFORE today's entries (no same-bar entry return)
+        # ---- P&L: ALL current positions earn today's return (including those exiting) ----
         existing_pos = dict(positions)
         if existing_pos:
             day_ret = sum(existing_pos[s] * ret_df.iloc[i].get(s, 0.0) for s in existing_pos)
             port_rets.iloc[i] = day_ret
 
-        # Check entries: new 50-day high, PIT member, liquid
+        # ---- Remove exits AFTER P&L (exit at today's close, not yesterday's) ----
+        for sym in to_exit:
+            positions.pop(sym, None)
+
+        # ---- ENTRY CHECK: signal from yesterday's close, symmetric with exits ----
         new_entries = []
         n_open = len(positions)
         if n_open < MAX_POSITIONS:
@@ -104,12 +111,13 @@ def run(config):
                     continue
                 if dv_now.get(sym, 0) < min_dv:
                     continue
-                cur = close_cap.iloc[i].get(sym)
-                if not cur or not np.isfinite(cur) or cur < min_px:
+                cur_prev = close_cap.iloc[i - 1].get(sym) if i > 0 else None
+                if not cur_prev or not np.isfinite(cur_prev) or cur_prev < min_px:
                     continue
-                hi50 = close_cap[sym].iloc[max(i - ENTRY_DAYS, 0):i].max()
-                if cur > hi50:
-                    rets_20 = ret_df[sym].iloc[max(i - 20, 0):i]
+                # 50-day high through yesterday
+                hi50 = close_cap[sym].iloc[max(i - ENTRY_DAYS - 1, 0):i - 1].max()
+                if cur_prev > hi50:
+                    rets_20 = ret_df[sym].iloc[max(i - 21, 0):i - 1]
                     vol_20 = float(rets_20.std(ddof=1)) * np.sqrt(TRADING_DAYS) if len(rets_20) > 5 else 0.20
                     w = min(VOL_TARGET / max(vol_20, 0.05), 1.0 / MAX_POSITIONS)
                     positions[sym] = w

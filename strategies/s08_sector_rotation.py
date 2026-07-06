@@ -46,10 +46,11 @@ def run(config: dict) -> dict:
     end      = cfg["end_date"]
     is_smoke = config.get("smoke", False)
 
-    s08_cfg   = config.get("strategies", {}).get("s08", {})
-    top_n     = s08_cfg.get("top_n", 3)
-    lb_months = s08_cfg.get("lookback_months", 3)
-    cash_filt = s08_cfg.get("abs_momentum_cash_filter", True)
+    s08_cfg          = config.get("strategies", {}).get("s08", {})
+    top_n            = s08_cfg.get("top_n", 3)
+    lb_months        = s08_cfg.get("lookback_months", 3)
+    cash_filt        = s08_cfg.get("abs_momentum_cash_filter", True)
+    graded_cash_filt = s08_cfg.get("graded_cash_filter", False)
 
     cost_bps = config["costs"]["equity_cost_bps"]
     slip_bps = config["costs"]["equity_slippage_bps"]
@@ -75,12 +76,20 @@ def run(config: dict) -> dict:
         if returns.empty:
             continue
 
-        # Cash filter: if the top sector has negative trailing return, go to cash
-        if cash_filt and returns.iloc[0] <= 0:
-            weight_schedule[d] = {}
-            continue
+        if graded_cash_filt:
+            # V6: drop each top-N holding with negative momentum individually;
+            # equal-weight survivors; go to cash only if none are positive.
+            selected = [s for s in returns.index[:top_n] if returns[s] > 0]
+            if not selected:
+                weight_schedule[d] = {}
+                continue
+        else:
+            # Original all-or-nothing cash filter
+            if cash_filt and returns.iloc[0] <= 0:
+                weight_schedule[d] = {}
+                continue
+            selected = returns.iloc[:top_n].index.tolist()
 
-        selected = returns.iloc[:top_n].index.tolist()
         w = {s: 1.0 / len(selected) for s in selected}
         weight_schedule[d] = w
 

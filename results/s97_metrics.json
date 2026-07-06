@@ -1,0 +1,19 @@
+{
+  "is": {
+    "sharpe": null,
+    "cagr": null,
+    "max_dd": null
+  },
+  "oos": {
+    "sharpe": null,
+    "cagr": null,
+    "max_dd": null
+  },
+  "full": {
+    "sharpe": null,
+    "cagr": null
+  },
+  "flag": "STUB_DATA",
+  "stub_reason": "norgatedata v1.0.74 has no dividends() API. load_dividends() calls norgatedata.dividends() which raises AttributeError. Strategy logic is sound; blocked at data layer. Fix: use Tiingo, Sharadar, or compute from TOTALRETURN/CAPITAL price ratio.",
+  "lookahead_audit": "CLEAN -- event-driven hold schedule, returns computed separately"
+}

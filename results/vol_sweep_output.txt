@@ -1,0 +1,73 @@
+============================================================================
+PART 1 -- GROSS vs NET PER STRATEGY  (OOS: 2017-07-03 to 2024-12-31)
+============================================================================
+  Note: apply_costs uses 20bp round-trip per unit turnover (5+5 one-way x2).
+
+ID       Gross SR    Net SR     dSR   TO(x)   Actual bp  Expected bp  Match?
+----------------------------------------------------------------------------
+s128       +1.039    +1.016  +0.023     2.1x       43.1bp        41.3bp  OK
+s30        +0.703    +0.691  +0.012     0.8x       18.9bp        16.6bp  OK
+s31        +0.968    +0.833  +0.135     7.4x      150.5bp       147.4bp  OK
+s35        +0.555    +0.529  +0.026     1.9x       38.6bp        38.6bp  OK
+s49        +0.561    +0.552  +0.009     0.8x       18.0bp        16.2bp  OK
+s115       +0.841    +0.828  +0.013     0.9x       19.3bp        18.2bp  OK
+s02        +0.754    +0.686  +0.068     6.6x      152.0bp       131.4bp  CHECK
+s46        +0.815    +0.806  +0.009     0.5x       10.2bp        10.8bp  OK
+s90        +1.099    +0.938  +0.161     7.6x      191.9bp       151.8bp  CHECK
+
+Weighted book drag (20bp * TO * weight, annualized): 84.4 bp/year
+A strategy IS correctly costed if Actual bp ~ Expected bp (+/- 5bp).
+Large 'CHECK' flags indicate TO accounting difference (e.g. one-way vs round-trip).
+
+============================================================================
+PART 2 -- VOL-TARGET SWEEP  (new 9-strategy book, OOS net returns)
+============================================================================
+  Overlay: scale = (target / 63d-rolling-vol), lag 1d, clipped [0.25, 4.0x].
+  Clip means max 4x gross leverage; floor means never less than 25% of target.
+
+  Target     CAGR   Sharpe       MDD   AvgLev   MaxLev   Beat SPY
+----------------------------------------------------------------------------
+     SPY  +14.4%       --    -33.7%       --       --         --
+raw book  +11.3%   +1.019    -16.3%    1.00x    1.00x         --
+raw gross  +12.4%   +1.109    -16.2%    1.00x    1.00x         --
+
+     8%   +10.1%   +1.129    -14.0%    0.95x    2.37x       31%
+    10%   +12.5%   +1.122    -17.4%    1.18x    2.96x       42%
+    12%   +15.0%   +1.117    -20.6%    1.41x    3.55x       54%
+    15%   +18.6%   +1.110    -25.3%    1.75x    4.00x       63%
+    20%   +23.4%   +1.070    -32.6%    2.28x    4.00x       67%
+
+AvgLev = mean daily scale factor over OOS; MaxLev = single-day peak.
+Beat SPY = % of rolling 1-year windows where scaled book CAGR > SPY CAGR.
+
+============================================================================
+PART 3 -- PER-YEAR RETURNS AT EACH VOL TARGET  (vs SPY)
+============================================================================
+  Year     SPY     raw    8%   10%   12%   15%   20%
+----------------------------------------------------------------------------
+  2017  +24.3%  +16.8%  +30.3%  +37.3%  +44.7%  +55.0%  +57.9%
+  2018  -4.6%  -1.6%  -2.9%  -3.8%  -4.7%  -6.2%  -9.7%
+  2019  +31.2%  +21.0%  +26.7%  +34.3%  +42.3%  +55.1%  +77.1%
+  2020  +18.3%  +26.2%  +15.8%  +19.9%  +24.1%  +30.5%  +40.9%
+  2021  +28.7%  +20.9%  +13.0%  +16.4%  +19.8%  +25.0%  +33.8%
+  2022  -18.2%  -9.1%  -6.7%  -8.4%  -10.1%  -12.7%  -17.1%
+  2023  +26.4%  +11.1%  +8.4%  +10.5%  +12.6%  +15.7%  +20.9%
+  2024  +24.9%  +12.3%  +10.6%  +13.3%  +16.0%  +20.1%  +26.9%
+
+============================================================================
+PART 4 -- FINANCING-ADJUSTED CAGR  (deduct SOFR on borrowed fraction)
+  Assumed avg SOFR over OOS 2017-2024: 2.5%
+  Financing cost = max(AvgLev - 1, 0) x SOFR  (pay only on levered portion)
+============================================================================
+  Target      CAGR   FinCost   AdjCAGR   AdjSharpe
+----------------------------------------------------------------------------
+raw book   +11.3%     0.00%   +11.3%     +1.019
+     8%    +10.1%     0.00%   +10.1%     +1.129
+    10%    +12.5%     0.45%   +12.0%     +1.081
+    12%    +15.0%     1.03%   +13.8%     +1.040
+    15%    +18.6%     1.88%   +16.4%     +0.997
+    20%    +23.4%     3.20%   +19.5%     +0.923
+
+Financing cost is a rough lower bound; actual cost depends on broker margin
+rate, which typically runs SOFR + 50-200bp for retail or SOFR + 10-50bp prime.
+Gap risk (fast gap past stop on levered fraction) is not modeled here.

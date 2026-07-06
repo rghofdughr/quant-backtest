@@ -1,0 +1,195 @@
+==========================================================================================
+O-goldtrend IS VALIDATION  (2000-01-01 to 2017-06-30)
+FROZEN parameters: GLD 126d MA -> GLD; elif IEF 210d MA -> IEF; else cash
+==========================================================================================
+
+DATA COVERAGE NOTE:
+  GLD (gold ETF): inception 2004-11-18. Pre-inception -> GLD signal cannot fire.
+  IEF (7-10yr Treasury): inception 2002-07-26. Pre-inception -> cash.
+  No gold spot/futures proxy used. Decision: run on ETF data only.
+  Consequence: 2000-2002 = cash; 2002-2004 = IEF-or-cash; 2004+ = full logic.
+  126d MA warmup completes ~2005-05-26. 210d warmup completes ~2003-06-24.
+  The critical 2011-2015 gold bear is FULLY within GLD history. No data gap.
+
+Loading prices...
+  GLD: 2004-11-18 to 2017-06-30  (3292 obs)
+  IEF: 2002-07-26 to 2017-06-30  (3896 obs)
+  SHY: 2002-07-26 to 2017-06-30  (3896 obs)
+
+Building O-goldtrend weight schedule (IS, frozen parameters)...
+
+Loading book IS returns (11-strategy book applied to IS data)...
+  s128: IS SR=+0.536
+  s30: IS SR=+0.724
+  s31: IS SR=+0.297
+  s35: IS SR=+0.386
+  s49: IS SR=+0.563
+  s115: IS SR=+0.327
+  s113: IS SR=+0.300
+  s135: IS SR=+0.542
+  s02: IS SR=+0.787
+  s46: IS SR=+0.447
+  s90: IS SR=+1.204
+  Book IS SR=+0.910
+
+==========================================================================================
+IS vs OOS SIDE-BY-SIDE COMPARISON
+==========================================================================================
+Metric                         IS (2000-2017)  OOS (2017-2024)
+--------------------------------------------------------------
+Gross Sharpe                          +0.551          +0.689
+Net Sharpe                            +0.526          +0.586
+Net CAGR                              +6.3%          +7.0%
+Max Drawdown                         -26.7%         -25.1%
+Turnover (ann.)                         1.7x            6.1x
+corr_book                             +0.220          +0.275
+corr_s46                              +0.301          +0.481
+dN_eff                               +0.4676         +0.3825
+dSR (5% test wt)                     +0.0214         +0.0162
+GLD buy-and-hold SR                   +0.416       (OOS: n/a)
+
+  IS note: 2000-2002 = cash (no ETF data); 2002-2004 = IEF/cash only.
+  GLD buy-and-hold IS Sharpe = +0.416 (GLD from 2004 onward).
+
+==========================================================================================
+PER-YEAR NET RETURNS (IS + OOS)
+==========================================================================================
+  Year    Strategy     Book IS  Regime / note
+  ----------------------------------------------------------------------
+  2000      +0.0%      -3.2%  (cash: no ETF data)
+  2001      +0.0%      -3.3%  (cash: no ETF data)
+  2002      +0.0%      -5.4%  (IEF warmup; GLD not yet)
+  2003      -9.0%     +21.2%  (IEF or cash)
+  2004      +1.2%     +11.5%  (GLD partial yr from Nov)
+  2005     +26.6%      +5.9%  
+  2006     +16.2%     +16.6%  
+  2007     +31.7%     +11.8%  
+  2008      +9.0%      -8.5%  
+  2009     +23.1%     +21.5%  
+  2010     +29.8%     +28.4%  <-- late gold bull
+  2011      +2.2%     +12.5%  <-- late gold bull
+  2012      +2.2%     +17.2%  
+  2013      -2.7%     +19.8%  <-- STRESS TEST: GLD -28%
+  2014      -6.0%      +3.2%  
+  2015      -4.9%      -5.1%  <-- end of gold bear
+  2016      +9.0%      +9.8%  
+  2017      -1.4%      +9.1%  
+
+  OOS per-year (reference from prior run):
+  Year    Strategy  Note
+  --------------------------------------------------
+  2017      -5.5%  
+  2018      +0.4%  
+  2019     +11.4%  
+  2020     +22.6%  COVID spike
+  2021     -12.9%  gold trend broke
+  2022      +1.6%  
+  2023     +10.8%  
+  2024     +33.5%  42% of positive return
+
+==========================================================================================
+2013 GOLD CRASH STRESS TEST -- Monthly signal table 2011-2015
+Key: Did the 126d MA signal exit gold BEFORE the April 2013 crash (-28% yr)?
+==========================================================================================
+  Date         GLD($)  126dMA($)  GLD-sig  IEF-sig  Alloc  GLD m-ret  IEF m-ret
+  ------------------------------------------------------------------------------------------
+  2011-01-31   129.87     130.08    BELOW    BELOW   CASH     +6.0%     -0.2%
+  2011-02-28   137.66     132.29    ABOVE    BELOW    GLD     +1.6%     -0.2%
+  2011-03-31   139.86     134.68    ABOVE    BELOW    GLD     +8.9%     +1.8%
+  2011-04-29   152.37     136.82    ABOVE    BELOW    GLD     -1.8%     +2.5%
+  2011-05-31   149.64     139.04    ABOVE    ABOVE    GLD     -2.4%     -0.5%
+  2011-06-30   146.00     141.36    ABOVE    ABOVE    GLD     +8.4%     +3.2%
+  2011-07-29   158.29     144.90    ABOVE    ABOVE    GLD    +12.3%     +4.7%
+  2011-08-31   177.72     151.43    ABOVE    ABOVE    GLD    -11.1%     +2.2% <-- gold bear starts
+  2011-09-30   158.06     157.23    ABOVE    ABOVE    GLD     +5.9%     -1.3%
+  2011-10-31   167.34     159.95    ABOVE    ABOVE    GLD     +1.7%     +0.6%
+  2011-11-30   170.13     163.66    ABOVE    ABOVE    GLD    -10.7%     +2.0%
+  2011-12-30   151.99     165.58    BELOW    ABOVE    IEF    +11.4%     +0.9%
+  2012-01-31   169.31     166.29    ABOVE    ABOVE    GLD     -3.0%     -1.1%
+  2012-02-29   164.29     165.09    BELOW    ABOVE    IEF     -1.3%     -1.6%
+  2012-03-30   162.12     164.13    BELOW    ABOVE    IEF     -0.1%     +2.5%
+  2012-04-30   161.88     163.40    BELOW    ABOVE    IEF     -6.3%     +2.9%
+  2012-05-31   151.62     160.68    BELOW    ABOVE    IEF     +2.4%     -0.4%
+  2012-06-29   155.19     160.55    BELOW    ABOVE    IEF     +0.8%     +1.4%
+  2012-07-31   156.49     159.01    BELOW    ABOVE    IEF     +4.9%     -0.1%
+  2012-08-31   164.22     157.18    ABOVE    ABOVE    GLD     +4.7%     -0.3%
+  2012-09-28   171.89     158.42    ABOVE    ABOVE    GLD     -2.9%     -0.4%
+  2012-10-31   166.83     160.08    ABOVE    ABOVE    GLD     -0.5%     +1.0%
+  2012-11-30   166.05     162.45    ABOVE    ABOVE    GLD     -2.4%     -0.9%
+  2012-12-31   162.02     163.75    BELOW    ABOVE    IEF     -0.5%     -1.3%
+  2013-01-31   161.20     165.04    BELOW    BELOW   CASH     -5.1%     +1.1%
+  2013-02-28   153.00     164.68    BELOW    ABOVE    IEF     +1.0%     +0.3%
+  2013-03-29   154.47     161.93    BELOW    ABOVE    IEF     -7.6%     +1.5% <-- CRASH (-15% Apr)
+  2013-04-30   142.77     157.71    BELOW    ABOVE    IEF     -6.2%     -3.1%
+  2013-05-31   133.92     152.22    BELOW    BELOW   CASH    -11.1%     -2.5% <-- taper tantrum
+  2013-06-28   119.11     146.99    BELOW    BELOW   CASH     +7.4%     -0.4%
+  2013-07-31   127.96     140.17    BELOW    BELOW   CASH     +5.2%     -1.4%
+  2013-08-30   134.62     135.78    BELOW    BELOW   CASH     -4.8%     +1.8%
+  2013-09-30   128.18     131.84    BELOW    BELOW   CASH     -0.3%     +0.8%
+  2013-10-31   127.74     129.23    BELOW    BELOW   CASH     -5.5%     -0.9%
+  2013-11-29   120.70     127.17    BELOW    BELOW   CASH     -3.8%     -2.1%
+  2013-12-31   116.12     125.77    BELOW    BELOW   CASH     +3.4%     +3.1%
+  2014-01-31   120.09     124.70    BELOW    ABOVE    IEF     +6.3%     +0.4%
+  2014-02-28   127.62     123.51    ABOVE    ABOVE    GLD     -3.1%     -0.6%
+  2014-03-31   123.61     123.47    ABOVE    ABOVE    GLD     +0.5%     +0.8%
+  2014-04-30   124.22     123.13    ABOVE    ABOVE    GLD     -3.1%     +1.8%
+  2014-05-30   120.43     123.56    BELOW    ABOVE    IEF     +6.3%     -0.2%
+  2014-06-30   128.04     124.52    ABOVE    ABOVE    GLD     -3.6%     -0.2%
+  2014-07-31   123.39     125.60    BELOW    ABOVE    IEF     +0.4%     +1.9%
+  2014-08-29   123.86     125.23    BELOW    ABOVE    IEF     -6.2%     -1.0%
+  2014-09-30   116.21     123.77    BELOW    ABOVE    IEF     -3.1%     +1.5%
+  2014-10-31   112.66     122.37    BELOW    ABOVE    IEF     -0.5%     +1.3%
+  2014-11-28   112.11     120.81    BELOW    ABOVE    IEF     +1.3%     +0.1%
+  2014-12-31   113.58     118.98    BELOW    ABOVE    IEF     +8.7%     +4.3%
+  2015-01-30   123.45     118.03    ABOVE    ABOVE    GLD     -5.9%     -2.5%
+  2015-02-27   116.16     117.02    BELOW    ABOVE    IEF     -2.2%     +0.9%
+  2015-03-31   113.66     116.18    BELOW    ABOVE    IEF     -0.2%     -0.6%
+  2015-04-30   113.47     115.86    BELOW    ABOVE    IEF     +0.6%     -0.4%
+  2015-05-29   114.10     116.03    BELOW    ABOVE    IEF     -1.5%     -1.6%
+  2015-06-30   112.37     115.77    BELOW    BELOW   CASH     -6.6%     +1.5%
+  2015-07-31   104.93     113.43    BELOW    ABOVE    IEF     +3.7%     +0.1%
+  2015-08-31   108.82     111.92    BELOW    ABOVE    IEF     -1.8%     +1.6%
+  2015-09-30   106.86     110.94    BELOW    ABOVE    IEF     +2.3%     -0.6%
+  2015-10-30   109.30     110.28    BELOW    ABOVE    IEF     -6.8%     -0.4%
+  2015-11-30   101.92     108.43    BELOW    ABOVE    IEF     -0.5%     -0.5%
+  2015-12-31   101.46     106.49    BELOW    BELOW   CASH       N/A       N/A
+
+==========================================================================================
+RETURN CONCENTRATION ANALYSIS
+==========================================================================================
+  IS (2000-2017): best year = 2007 (+31.7%), 21% of total positive return across 10 positive years
+           Top-3 years = 58% of total positive return: 2007(+31.7%), 2010(+29.8%), 2005(+26.6%)
+  OOS (2017-2024): best year = 2024 (+33.5%), 42% of total positive return across 6 positive years
+           Top-3 years = 84% of total positive return: 2024(+33.5%), 2020(+22.6%), 2019(+11.4%)
+
+  Interpretation: lumpy return in one window but different years = tail insurance behavior.
+  Lumpy only in OOS, flat/negative in IS = window artifact.
+
+==========================================================================================
+REDUNDANCY vs BOOK (IS)
+==========================================================================================
+  corr_book IS  = +0.220   (OOS was +0.275)
+  corr_s46 IS   = +0.301   (OOS was +0.481)
+  dN_eff IS     = +0.4676   (OOS was +0.3825)
+  dSR IS (5wt)  = +0.0214   (OOS was +0.0162)
+
+==========================================================================================
+PASS / FAIL VERDICT
+==========================================================================================
+
+  Criterion 1 -- Positive IS net Sharpe (insurance standard, not 0.7 bar):
+    IS net SR = +0.526  -> PASS
+
+  Criterion 2 -- Orthogonality holds in IS (corr_book well below 0.70):
+    IS corr_book = +0.220  -> PASS
+    IS dN_eff    = +0.4676  (positive = adds diversification)
+
+  Criterion 3 -- 2013 stress test (6m MA signal exited gold before crash):
+    March 2013 BME allocation: IEF  (April crash = -15% in gold)
+    Full-year 2013 return: -2.7%  (GLD full year = -28.3%)
+    -> PASS: signal exited gold before crash
+
+  OVERALL VERDICT: PASS
+  Positive IS Sharpe, orthogonality replicates, signal exited gold before 2013 crash. Mechanism is durable across both gold regimes.
+
+

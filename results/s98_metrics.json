@@ -1,0 +1,19 @@
+{
+  "is": {
+    "sharpe": null,
+    "cagr": null,
+    "max_dd": null
+  },
+  "oos": {
+    "sharpe": null,
+    "cagr": null,
+    "max_dd": null
+  },
+  "full": {
+    "sharpe": null,
+    "cagr": null
+  },
+  "flag": "STUB_DATA",
+  "stub_reason": "Same as s97 -- dividend ex-date data unavailable from norgatedata v1.0.74.",
+  "lookahead_audit": "CLEAN -- event-driven hold schedule, symmetric with s97"
+}
